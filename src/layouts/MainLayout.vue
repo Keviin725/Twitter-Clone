@@ -50,7 +50,7 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered :width="400">
       <!-- drawer content -->
 
       <q-input
@@ -79,7 +79,7 @@
           </q-item-section>
 
           <q-item-section side top>
-            <q-item-label caption>5 min ago</q-item-label>
+            <q-item-label caption>3 min ago</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -109,7 +109,7 @@
           </q-item-section>
 
           <q-item-section side top>
-            <q-item-label caption>5 min ago</q-item-label>
+            <q-item-label caption>15 min ago</q-item-label>
           </q-item-section>
         </q-item>
 
