@@ -6,7 +6,7 @@
 
         <q-toolbar-title class="text-weight-bold">
 
-          <span class="gt-sm">TwitterClone</span>
+          <span class="gt-sm">{{$route.name}}</span>
           <q-icon
             size="sm"
             color="primary"
@@ -32,14 +32,15 @@
         class="q-pa-md"
       />
       <q-list>
-        <q-item to="/" clickable v-ripple>
+        <q-item to="/" clickable v-ripple exact>
           <q-item-section avatar>
             <q-icon name="home" class="text-h6" size="md" />
           </q-item-section>
 
           <q-item-section class="text-weight-bold">Home</q-item-section>
         </q-item>
-        <q-item to="/about" clickable v-ripple>
+
+        <q-item to="/about" clickable v-ripple exact>
           <q-item-section avatar>
             <q-icon name="help" class="text-h6" size="md" />
           </q-item-section>
