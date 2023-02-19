@@ -5,7 +5,14 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title class="text-weight-bold">
-          TwitterClone
+
+          <span class="gt-sm">TwitterClone</span>
+          <q-icon
+            size="sm"
+            color="primary"
+            name="fa-solid fa-dove"
+            class="q-pa-md lt-md header-icon"
+          />
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -106,7 +113,7 @@
         </q-item>
 
       </q-list>
-      
+
     </q-drawer>
 
     <q-page-container>
@@ -137,3 +144,12 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+.header-icon
+  position: absolute,
+  bottom: 0,
+  left: 50%,
+  transform: translateX(-50%)
+
+</style>
