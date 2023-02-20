@@ -13,16 +13,24 @@
       </div>
 
       <div class="col col-shrink">
-        <q-btn class="q-mb-lg" rounded color="primary" label="Tweet" unelevated no-caps :disable="!newTweetContent"/>
+        <q-btn
+        class="q-mb-lg"
+        rounded color="primary"
+        label="Tweet"
+        unelevated
+        no-caps
+        :disable="!newTweetContent"
+        @click="addNewTweet"
+        />
       </div>
 
     </div>
     <q-separator size="10px" color="grey-2" class="divider"/>
 
-    <q-list  class="" >
+    <q-list separator>
 
 
-      <q-item class="q-py-md">
+      <q-item class="q-py-md" v-for="tweet in tweets" :key="tweet.date">
         <q-item-section avatar top>
           <q-avatar size="xl">
             <img src="https://cdn.quasar.dev/img/avatar5.jpg">
@@ -35,9 +43,7 @@
             <span class="text-grey-7">@thisKeviin</span>
           </strong></q-item-label>
           <q-item-label class="tweet-content text-body1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Ut soluta iusto praesentium deserunt dolorum consectetur nostrum maxime repellat eveniet,
-            accusamus itaque, incidunt quisquam voluptate dignissimos ducimus officiis harum autem molestias?
+            {{ tweet.content }}
           </q-item-label>
 
           <div class="row justify-between q-mt-sm tweet-icons">
@@ -49,7 +55,7 @@
         </q-item-section>
 
         <q-item-section side top>
-          1 min ago
+          {{tweet.date | relativeDate}}
         </q-item-section>
       </q-item>
     </q-list>
@@ -57,13 +63,39 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent} from 'vue'
+import { formatDistance } from 'date-fns'
 
 export default defineComponent({
   name: 'PageHome',
   data(){
+
     return{
-      newTweetContent: ''
+      newTweetContent: '',
+      tweets:[
+        {
+          content: 'Lorem ipsum',
+          date: 1676906506598
+        },
+        {
+          content: 'Lorem ipsum dolor sit amet',
+          date: 1676906506598
+        },
+      ]
+    }
+  },
+  filters:{
+    relativeDate(value){
+      return formatDistance(value, new Date())
+    }
+  },
+  methods:{
+    addNewTweet(){
+      let newTweet ={
+        content: this.newTweetContent,
+        date: Date.now()
+      }
+      this.tweets.unshift(newTweet)
     }
   }
 })
