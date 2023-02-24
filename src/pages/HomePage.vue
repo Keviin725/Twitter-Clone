@@ -1,97 +1,110 @@
 <template>
-  <q-page>
-    <div class="q-py-lg q-px-md row items-end q-col-gutter-md">
-      <div class="col">
-        <q-input
-          bottom-slots
-          v-model="newTweetContent"
-          placeholder="What's Happening"
-          counter
-          maxlength="280"
-          autogrow
-          style="new-tweet"
-        >
-          <template v-slot:before>
-            <q-avatar size="xl">
-              <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-            </q-avatar>
-          </template>
-        </q-input>
-      </div>
-
-      <div class="col col-shrink">
-        <q-btn
-          class="q-mb-lg"
-          rounded
-          color="primary"
-          label="Tweet"
-          unelevated
-          no-caps
-          :disable="!newTweetContent"
-          @click="addNewTweet"
-        />
-      </div>
-    </div>
-    <q-separator size="10px" color="grey-2" class="divider" />
-
-    <q-list separator>
-      <q-item class="q-py-md" v-for="tweet in tweets" :key="tweet.date">
-        <q-item-section avatar top>
-          <q-avatar size="xl">
-            <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
-          </q-avatar>
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label class="text-subtitle1"
-            ><strong>
-              Kevvv⚡
-              <span class="text-grey-7">@thisKeviin</span>
-            </strong></q-item-label
+  <q-page class="relative-position">
+    <q-scroll-area class="absolute fullscreen">
+      <div class="q-py-lg q-px-md row items-end q-col-gutter-md">
+        <div class="col">
+          <q-input
+            bottom-slots
+            v-model="newTweetContent"
+            placeholder="What's Happening"
+            counter
+            maxlength="280"
+            autogrow
+            style="new-tweet"
           >
-          <q-item-label class="tweet-content text-body1">
-            {{ tweet.content }}
-          </q-item-label>
+            <template v-slot:before>
+              <q-avatar size="xl">
+                <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
+              </q-avatar>
+            </template>
+          </q-input>
+        </div>
 
-          <div class="row justify-between q-mt-sm tweet-icons">
-            <q-btn
-            flat
-            round
-            color="grey"
-            icon="far fa-comment"
-            size="sm" />
+        <div class="col col-shrink">
+          <q-btn
+            class="q-mb-lg"
+            rounded
+            color="primary"
+            label="Tweet"
+            unelevated
+            no-caps
+            :disable="!newTweetContent"
+            @click="addNewTweet"
+          />
+        </div>
+      </div>
+      <q-separator size="10px" color="grey-2" class="divider" />
 
-            <q-btn
-            flat
-            round
-            color="grey"
-            icon="fas fa-retweet"
-            size="sm" />
+      <q-list separator>
+        <transition-group
+        appear
+        enter-active-class="animated fadeIn slow"
+        leave-active-class="animated fadeOut slow">
 
-            <q-btn
-            flat
-            round
-            color="grey"
-            icon="far fa-heart"
-            size="sm" />
+          <q-item
+          class="q-py-md"
+          v-for="tweet in tweets"
+          :key="tweet.date">
+            <q-item-section avatar top>
+              <q-avatar size="xl">
+                <img src="https://cdn.quasar.dev/img/avatar5.jpg" />
+              </q-avatar>
+            </q-item-section>
 
-            <q-btn
-            flat
-            round
-            color="grey"
-            icon="fas fa-trash"
-            size="sm"
-            @click="deleteTweet(tweet)"
-            />
+            <q-item-section>
+              <q-item-label class="text-subtitle1"
+                ><strong>
+                  Kevvv⚡
+                  <span
+                  class="text-grey-7">
+                    @thisKeviin
+                    <br class="lt-md"> &bullet; {{ tweet.date | relativeDate }}
 
-          </div>
-        </q-item-section>
+                  </span>
+                </strong></q-item-label
+              >
+              <q-item-label class="tweet-content text-body1">
+                {{ tweet.content }}
+              </q-item-label>
 
-        <q-item-section side top>
-          {{ tweet.date | relativeDate }}
-        </q-item-section>
-      </q-item>
-    </q-list>
+              <div class="row justify-between q-mt-sm tweet-icons">
+                <q-btn
+                flat
+                round
+                color="grey"
+                icon="far fa-comment"
+                size="sm" />
+
+                <q-btn
+                flat
+                round
+                color="grey"
+                icon="fas fa-retweet"
+                size="sm" />
+
+                <q-btn
+                flat
+                round
+                color="grey"
+                icon="far fa-heart"
+                size="sm" />
+
+                <q-btn
+                flat
+                round
+                color="grey"
+                icon="fas fa-trash"
+                size="sm"
+                @click="deleteTweet(tweet)"
+                />
+
+              </div>
+            </q-item-section>
+
+          </q-item>
+        </transition-group>
+      </q-list>
+  </q-scroll-area>
   </q-page>
 </template>
 
@@ -104,21 +117,13 @@ export default defineComponent({
   data() {
     return {
       newTweetContent: "",
-      tweets: [
-        {
-          content: "Lorem ipsum",
-          date: 1676906506598,
-        },
-        {
-          content: "Lorem ipsum dolor sit amet",
-          date: 1676906506598,
-        },
-      ],
+      tweets: [],
     };
   },
   filters: {
     relativeDate(value) {
       return formatDistance(value, new Date());
+      //return formatDistance(value, Date.now(), {addSuffix: true})
     },
   },
   methods: {
@@ -128,6 +133,7 @@ export default defineComponent({
         date: Date.now(),
       };
       this.tweets.unshift(newTweet);
+      this.newTweetContent = ''
     },
     deleteTweet(tweet){
       let dateToDelete = tweet.date
