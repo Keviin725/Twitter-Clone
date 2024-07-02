@@ -53,16 +53,16 @@
 
             <q-item-section>
               <q-item-label class="text-subtitle1"
-                ><strong>
-                  Kevvv⚡
-                  <span
-                  class="text-grey-7">
-                    @thisKeviin
-                    <br class="lt-md"> &bullet; {{ tweet.date | relativeDate }}
+  ><strong>
+    Kevvv⚡
+    <span
+    class="text-grey-7">
+      @thisKeviin
+      <br class="lt-md"> &bullet; {{ formatRelativeDate(tweet.date) }}
 
-                  </span>
-                </strong></q-item-label
-              >
+    </span>
+  </strong></q-item-label
+>
               <q-item-label class="tweet-content text-body1">
                 {{ tweet.content }}
               </q-item-label>
@@ -120,31 +120,27 @@ export default defineComponent({
       tweets: [],
     };
   },
-  filters: {
-    relativeDate(value) {
-      return formatDistance(value, new Date());
-      //return formatDistance(value, Date.now(), {addSuffix: true})
-    },
-  },
   methods: {
+    // Método para substituir o filtro
+    formatRelativeDate(value) {
+      return formatDistance(new Date(value), new Date(), { addSuffix: true });
+    },
     addNewTweet() {
       let newTweet = {
         content: this.newTweetContent,
         date: Date.now(),
       };
       this.tweets.unshift(newTweet);
-      this.newTweetContent = ''
+      this.newTweetContent = '';
     },
     deleteTweet(tweet){
-      let dateToDelete = tweet.date
-      let index = this.tweets.findIndex(tweet => tweet.date === dateToDelete)
-      this.tweets.splice(index, 1)
-
+      let dateToDelete = tweet.date;
+      let index = this.tweets.findIndex(tweet => tweet.date === dateToDelete);
+      this.tweets.splice(index, 1);
     }
   },
 });
 </script>
-
 <style lang="sass">
 .new-tweet
   textarea

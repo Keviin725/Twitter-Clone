@@ -2,7 +2,7 @@
   "name": "quasar-project",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "productName": "Twitter Clone",
   "author": "Kevin Machava <kevinmachava20@gmail.com>",
   "private": true,
   "scripts": {
